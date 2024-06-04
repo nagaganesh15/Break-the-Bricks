@@ -1,8 +1,6 @@
 <html>
     <head>
         <title>Break the Bricks</title>
-        <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.1">
         <style>
            body {
                 display: flex;
@@ -172,6 +170,45 @@
         let hs=localStorage.getItem('highballs') || 0;
         document.getElementById('highballs').innerHTML=hs;
         let sta=0;
+        const ball = document.getElementById('ball');
+let initialX;
+let currentX;
+let translateX;
+
+ball.addEventListener('touchstart', touchStart);
+ball.addEventListener('touchmove', touchMove);
+ball.addEventListener('touchend', touchEnd);
+
+function touchStart(e) {
+  initialX = e.touches[0].clientX - currentX;
+}
+
+function touchMove(e) {
+  e.preventDefault();
+  currentX = e.touches[0].clientX - initialX;
+  setTranslate(currentX);
+}
+
+function touchEnd() {
+  initialX = currentX;
+}
+
+function setTranslate(x) {
+  const containerWidth = board.offsetWidth;
+  const ballWidth = ball.offsetWidth;
+  const maxTranslateX = containerWidth - ballWidth;
+
+  if (x < 0) {
+    translateX = 0;
+  } else if (x > maxTranslateX) {
+    translateX = maxTranslateX;
+  } else {
+    translateX = x;
+  }
+
+  ball.style.transform = `translate(${translateX}px, 0)`;
+}
+
         function start()
         {
             // loop();
