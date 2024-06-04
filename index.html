@@ -178,10 +178,7 @@
             s.play();
             
             setTimeout(()=>{
-                document.getElementById('left').style.display='block';
-                document.getElementById('up').style.display='block';
-                document.getElementById('duup').style.display='block';
-                document.getElementById('right').style.display='block';
+                
                 document.getElementById('direction').style.display='none';
                 let a=document.getElementById('stbu');
                 let b=document.getElementById('ball');
@@ -346,7 +343,7 @@
             if (sta == 1) {
                 let touch = e.touches[0];
                 let touchX = touch.clientX;
-                let touchY = touch.clientY; 
+                let touchY = touch.clientY; // Get the Y coordinate of the touch
 
                 let boardRect = document.getElementById('board').getBoundingClientRect();
                 let ballX = (touchX - boardRect.left) / boardRect.width * 10;
