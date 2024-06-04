@@ -94,8 +94,8 @@
                 grid-row-start: 9;
                 grid-column-start: 4;
             }
-            #left,#up,#right{
-                display:none;
+            #left,#up,#right,#duup{
+                /* display:none; */
                 position: absolute;
                 cursor: pointer;
                 border-radius: 50%;
@@ -107,16 +107,17 @@
                 left: 20px;
             }
             #up{
-                left: 50%;
+                left: 20px;
+                bottom: 70px;
+            }
+            #duup{
+                right: 20px;
+                bottom: 70px;
             }
             #right{
                 right: 20px;
             }
-            @media (max-width: 767px) {
-                #left,#up,#right{
-                    display: block;
-                }
-            }
+        
 
         </style>
     </head>
@@ -138,6 +139,7 @@
         <h1 id="hsc">Highest Score: <spam id="highballs">0</spam></h1>
         <button id="left" onclick="left()"><img src="left.png" style="width: 50px; height: 50px;"></button>
         <button id="up" onclick="create()"><img src="up.png" style="width: 50px; height: 50px;"></button>
+        <button id="duup" onclick="create()"><img src="up.png" style="width: 50px; height: 50px;"></button>
         <button id="right" onclick="right()"><img src="right.png" style="width: 50px; height: 50px;"></button>
     </body>
     <script>
