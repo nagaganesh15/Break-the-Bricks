@@ -343,22 +343,33 @@
         let prevMouseY = 0;
 
         document.addEventListener('mousemove', (e) => {
+            if (sta == 1) {
+                // let mouseX = e.clientX;
+                // let mouseY = e.clientY; // Get the current mouse Y position
+                // let boardRect = document.getElementById('board').getBoundingClientRect();
+                // let ballX = (mouseX - boardRect.left) / boardRect.width * 10;
+                // lo.y = Math.round(ballX);
+                // ball.style.gridColumnStart = lo.y;
+
+                // // Check if the mouse moved up
+                // if (mouseY < prevMouseY) {
+                //     create();
+                // }
+
+                // prevMouseY = mouseY; // Update the previous mouse position
+            }
+        });
+        document.addEventListener('touchmove', handleTouchMove, false);
+        function handleTouchMove(e) {
     if (sta == 1) {
-        let mouseX = e.clientX;
-        let mouseY = e.clientY; // Get the current mouse Y position
+        let touch = e.touches[0]; // Get the first touch object
+        let touchX = touch.clientX; // Get the X coordinate of the touch
         let boardRect = document.getElementById('board').getBoundingClientRect();
-        let ballX = (mouseX - boardRect.left) / boardRect.width * 10;
+        let ballX = (touchX - boardRect.left) / boardRect.width * 10;
         lo.y = Math.round(ballX);
         ball.style.gridColumnStart = lo.y;
-
-        // Check if the mouse moved up
-        if (mouseY < prevMouseY) {
-            create();
-        }
-
-        prevMouseY = mouseY; // Update the previous mouse position
     }
-});
+}
         window.addEventListener('keydown',e=>{
             if(sta==1)
             {
