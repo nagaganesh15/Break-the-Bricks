@@ -1,6 +1,8 @@
 <html>
     <head>
         <title>Break the Bricks</title>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.1">
         <style>
            body {
                 display: flex;
@@ -99,7 +101,7 @@
                 grid-column-start: 4;
             }
             #left,#up,#right,#duup{
-                /* display:none; */
+                display:none;
                 position: absolute;
                 cursor: pointer;
                 border-radius: 50%;
@@ -121,7 +123,7 @@
             #right{
                 right: 20px;
             }
-            @media (max-width:767px)
+            /* @media (max-width:767px)
             {
                 #left,#up,#right,#duup{
                     display: block;
@@ -129,7 +131,6 @@
                 #hsc{
                     top: 80px;
                     left:100px;
-                    /* right: 0px; */
                 }
                 #direction{
                     left:10px;
@@ -137,7 +138,7 @@
                 #stbu{
                     left:10px;
                 }
-            }
+            } */
 
         </style>
     </head>
@@ -178,6 +179,10 @@
             s.play();
             
             setTimeout(()=>{
+                document.getElementById('left').style.display='block';
+                document.getElementById('up').style.display='block';
+                document.getElementById('duup').style.display='block';
+                document.getElementById('right').style.display='block';
                 document.getElementById('direction').style.display='none';
                 let a=document.getElementById('stbu');
                 let b=document.getElementById('ball');
