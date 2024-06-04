@@ -98,7 +98,7 @@
                 grid-row-start: 9;
                 grid-column-start: 4;
             }
-            #left,#up,#right,#duup{
+            /* #left,#up,#right,#duup{
                 display:none;
                 position: absolute;
                 cursor: pointer;
@@ -120,7 +120,7 @@
             }
             #right{
                 right: 20px;
-            }
+            } */
             /* @media (max-width:767px)
             {
                 #left,#up,#right,#duup{
@@ -156,10 +156,10 @@
             <div id="ball"></div>
         </div>
         <h1 id="hsc">Highest Score: <spam id="highballs">0</spam></h1>
-        <button id="left" onclick="left()"><img src="left.png" style="width: 200px; height: 200px;"></button>
+        <!-- <button id="left" onclick="left()"><img src="left.png" style="width: 200px; height: 200px;"></button>
         <button id="up" onclick="create()"><img src="up.png" style="width: 200px; height: 200px;"></button>
         <button id="duup" onclick="create()"><img src="up.png" style="width: 200px; height: 200px;"></button>
-        <button id="right" onclick="right()"><img src="right.png" style="width: 200px; height: 200px;"></button>
+        <button id="right" onclick="right()"><img src="right.png" style="width: 200px; height: 200px;"></button> -->
     </body>
     <script>
         let lo={x:20,y:1},b=0,gd={x:1,y:1};
@@ -340,36 +340,25 @@
             }
         }
         let ball = document.getElementById('ball');
-        let prevMouseY = 0;
-
-        document.addEventListener('mousemove', (e) => {
-            if (sta == 1) {
-                // let mouseX = e.clientX;
-                // let mouseY = e.clientY; // Get the current mouse Y position
-                // let boardRect = document.getElementById('board').getBoundingClientRect();
-                // let ballX = (mouseX - boardRect.left) / boardRect.width * 10;
-                // lo.y = Math.round(ballX);
-                // ball.style.gridColumnStart = lo.y;
-
-                // // Check if the mouse moved up
-                // if (mouseY < prevMouseY) {
-                //     create();
-                // }
-
-                // prevMouseY = mouseY; // Update the previous mouse position
-            }
-        });
+        let prevTouchY = 0;
         document.addEventListener('touchmove', handleTouchMove, false);
         function handleTouchMove(e) {
-    if (sta == 1) {
-        let touch = e.touches[0]; // Get the first touch object
-        let touchX = touch.clientX; // Get the X coordinate of the touch
-        let boardRect = document.getElementById('board').getBoundingClientRect();
-        let ballX = (touchX - boardRect.left) / boardRect.width * 10;
-        lo.y = Math.round(ballX);
-        ball.style.gridColumnStart = lo.y;
-    }
-}
+            if (sta == 1) {
+                let touch = e.touches[0];
+                let touchX = touch.clientX;
+                let touchY = touch.clientY; 
+
+                let boardRect = document.getElementById('board').getBoundingClientRect();
+                let ballX = (touchX - boardRect.left) / boardRect.width * 10;
+                lo.y = Math.round(ballX);
+                ball.style.gridColumnStart = lo.y;
+                if (touchY < prevTouchY) {
+                    create();
+                }
+
+                prevTouchY = touchY; 
+            }
+        }
         window.addEventListener('keydown',e=>{
             if(sta==1)
             {
