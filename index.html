@@ -137,7 +137,45 @@
                     left:10px;
                 }
             } */
+            #left{
+                height: 100%;
+                width: 300;
+                position: absolute;
+                left: 1px;
+                background-color: transparent;
+                border: 0px;
+                display: none;
+            }
+            #right{
+                height: 100%;
+                width: 300;
+                position: absolute;
+                right: 1px;
+                background-color: transparent;
+                border: 0px;
+                display: none;
 
+            }
+            #up{
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                top: 1px;
+                background-color: transparent;
+                /* border: 0px;    */
+                display: none;
+
+            }
+            #duup{
+                height: 300;
+                width: 100%;
+                position: absolute;
+                bottom: 1px;
+                background-color: transparent;
+                border: 0px;   
+                display: none;
+
+            }
         </style>
     </head>
     <body>
@@ -160,6 +198,11 @@
         <button id="up" onclick="create()"><img src="up.png" style="width: 200px; height: 200px;"></button>
         <button id="duup" onclick="create()"><img src="up.png" style="width: 200px; height: 200px;"></button>
         <button id="right" onclick="right()"><img src="right.png" style="width: 200px; height: 200px;"></button> -->
+        <button id="up" onclick="create()"></button>
+        <!-- <button id="duup" onclick="create()"></button> -->
+        <button id="left" onclick="left()"></button>
+        <button id="right" onclick="right()"></button>
+        
     </body>
     <script>
         let lo={x:20,y:1},b=0,gd={x:1,y:1};
@@ -178,7 +221,10 @@
             s.play();
             
             setTimeout(()=>{
-                
+                document.getElementById('left').style.display='block';
+                document.getElementById('right').style.display='block';
+                document.getElementById('up').style.display='block';
+                // document.getElementById('duup').style.display='block';
                 document.getElementById('direction').style.display='none';
                 let a=document.getElementById('stbu');
                 let b=document.getElementById('ball');
@@ -337,23 +383,15 @@
             }
         }
         let ball = document.getElementById('ball');
-        let prevTouchY = 0;
         document.addEventListener('touchmove', handleTouchMove, false);
         function handleTouchMove(e) {
             if (sta == 1) {
-                let touch = e.touches[0];
-                let touchX = touch.clientX;
-                let touchY = touch.clientY; // Get the Y coordinate of the touch
-
+                let touch = e.touches[0]; // Get the first touch object
+                let touchX = touch.clientX; // Get the X coordinate of the touch
                 let boardRect = document.getElementById('board').getBoundingClientRect();
                 let ballX = (touchX - boardRect.left) / boardRect.width * 10;
                 lo.y = Math.round(ballX);
                 ball.style.gridColumnStart = lo.y;
-                if (touchY < prevTouchY) {
-                    create();
-                }
-
-                prevTouchY = touchY; 
             }
         }
         window.addEventListener('keydown',e=>{
