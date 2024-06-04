@@ -170,45 +170,7 @@
         let hs=localStorage.getItem('highballs') || 0;
         document.getElementById('highballs').innerHTML=hs;
         let sta=0;
-        const ball = document.getElementById('ball');
-let initialX;
-let currentX;
-let translateX;
-
-ball.addEventListener('touchstart', touchStart);
-ball.addEventListener('touchmove', touchMove);
-ball.addEventListener('touchend', touchEnd);
-
-function touchStart(e) {
-  initialX = e.touches[0].clientX - currentX;
-}
-
-function touchMove(e) {
-  e.preventDefault();
-  currentX = e.touches[0].clientX - initialX;
-  setTranslate(currentX);
-}
-
-function touchEnd() {
-  initialX = currentX;
-}
-
-function setTranslate(x) {
-  const containerWidth = board.offsetWidth;
-  const ballWidth = ball.offsetWidth;
-  const maxTranslateX = containerWidth - ballWidth;
-
-  if (x < 0) {
-    translateX = 0;
-  } else if (x > maxTranslateX) {
-    translateX = maxTranslateX;
-  } else {
-    translateX = x;
-  }
-
-  ball.style.transform = `translate(${translateX}px, 0)`;
-}
-
+        
         function start()
         {
             // loop();
@@ -377,6 +339,26 @@ function setTranslate(x) {
                 b=1;
             }
         }
+        let ball = document.getElementById('ball');
+        let prevMouseY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+    if (sta == 1) {
+        let mouseX = e.clientX;
+        let mouseY = e.clientY; // Get the current mouse Y position
+        let boardRect = document.getElementById('board').getBoundingClientRect();
+        let ballX = (mouseX - boardRect.left) / boardRect.width * 10;
+        lo.y = Math.round(ballX);
+        ball.style.gridColumnStart = lo.y;
+
+        // Check if the mouse moved up
+        if (mouseY < prevMouseY) {
+            create();
+        }
+
+        prevMouseY = mouseY; // Update the previous mouse position
+    }
+});
         window.addEventListener('keydown',e=>{
             if(sta==1)
             {
