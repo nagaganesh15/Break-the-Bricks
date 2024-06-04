@@ -1,0 +1,304 @@
+<html>
+    <head>
+        <title>Break the Bricks</title>
+        <style>
+           body {
+                display: flex;
+                justify-content: center; 
+                align-items: center; 
+                height: 100vh; 
+                background-image: url('background.jpg');
+                background-size: cover; 
+                background-position: center;
+                background-repeat: no-repeat; 
+            }
+
+            #board{
+                width:52vmin;
+                height: 92vmin;
+               /* // border: 2px solid black; */
+                display: grid;
+                grid-template-rows: repeat(20,1fr);
+                grid-template-columns: repeat(10,1fr);
+            }
+            #ball{
+                border-radius: 50%;
+                border: 2px solid black;
+                background-color: white;
+                grid-row-start: 20;
+                display: none;
+            }
+            .ballup{
+                border-radius: 50%;
+                border: 2px solid black;
+                background-color: whitesmoke;
+                grid-row-start: 20;
+            }
+            .glass{
+                border-radius: 25%;
+                border: 2px solid black;
+                /* grid-row-start: 1; */
+                /* grid-column-start: 10; */
+                background-color: red;
+            }
+            #sc{
+                position: absolute;
+                left: 100;
+                top : 20;
+                border: 2px solid black;
+                width: 200;
+                height: 50;
+                text-align: center;
+                padding-top: 10;
+                border-radius: 5%;
+                background-color: yellow;
+            }
+            #hsc{
+                position: absolute;
+                right: 100;
+                top : 20;
+                border: 2px solid black;
+                width: 280;
+                height: 50;
+                text-align: center;
+                padding-top: 10;
+                border-radius: 5%;
+                background-color: yellow;
+            }
+            #stbu{
+                display: block; 
+                grid-row-start: 10; 
+                grid-column-start: 4;
+                width: 200;
+                height: 200;
+                border-radius: 50%;
+                font-size: 050;
+                cursor: pointer;
+                margin-left: 50;
+            }
+            #stbu:hover {
+                background-color: rgba(255, 255, 255, 1);
+            }
+            #direction{
+                background-color: rgba(0, 0, 0, 0.7);
+                padding: 20px;
+                border-radius: 10px;
+                text-align: center;
+                margin-bottom: 20px;
+                position: absolute;
+                top: 50px;
+                color: white;
+                /* grid-row-start: 9;
+                grid-column-start: 5; */
+            }
+        </style>
+    </head>
+    <body>
+        <h1 id="sc">score: 0</h1>
+        <div id="board">
+            
+            <button id="stbu" onclick="start()">Start</button>
+            <audio src="start.mp3" id="startsound"></audio>
+            <div id="direction">
+                <h2>How to Play</h2>
+                <p>Use the left and right arrow keys to move the Ball.</p>
+                <p>Use the Up arrow or Enter keys to blast the bricks.</p>
+                <p>Break the falling bricks to score points</p>
+                
+            </div>
+            <div id="ball"></div>
+        </div>
+        <h1 id="hsc">Highest Score: <spam id="highballs">0</spam></h1>
+    </body>
+    <script>
+        let lo={x:20,y:1},b=0,gd={x:1,y:1};
+        let balls=[];
+        let score=0;
+        let avacol=[0,1,2,3,4,5,6,7,8,9,10];
+        let glasses=[];
+        let hs=localStorage.getItem('highballs') || 0;
+        document.getElementById('highballs').innerHTML=hs;
+        let sta=0;
+        function start()
+        {
+            // loop();
+            let s=document.getElementById('startsound');
+            s.play();
+            
+            setTimeout(()=>{
+                document.getElementById('direction').style.display='none';
+                let a=document.getElementById('stbu');
+                let b=document.getElementById('ball');
+                b.style.display='block'
+                a.style.display='none';
+                sta=1;
+                slow();
+            },500)
+            
+        }
+        function rep()
+        {
+            let a=document.getElementById('ball')
+            a.style.gridColumnStart=lo.y;
+            if(lo.y==10)
+            {
+                b=-1
+            }
+            if(lo.y==1)
+            {
+                b=1;
+            }
+            lo.y+=b
+        }
+        function createglass()
+        {
+            let glass=document.createElement('div');
+            glass.classList.add('glass');
+            document.getElementById('board').appendChild(glass);
+            let ro=gd.x;
+            let r=Math.floor(Math.random()*10);
+            if(r==0||r==1)
+            {
+                r=2;
+            }
+            glasses.push({element:glass,ro:ro,col:r})
+        }
+        function glassdown(g)
+        {
+            if(g.ro>20)
+            {
+                g.element.remove();
+                return;
+            }
+            g.element.style.gridColumnStart=g.col;
+            g.element.style.gridRowStart=g.ro;
+            g.ro+=1
+        }
+        function slow()
+        {
+            createglass();
+            setTimeout(slow,1000);
+        }
+        // slow();
+        function loop()
+        {
+            // rep();
+            balls.forEach(ball=>{
+                up(ball);
+                glasses.forEach(glass=>{
+                    if(ball.col==glass.col && ball.ga==glass.ro)
+                    {
+                        glass.element.remove();
+                        // ball.element.remove();
+                        score+=1;
+                        // avacol=avacol.filter(item=>item!==lo.y)
+                        // avacol.push(ball.col)
+                        // glasses.splice(index, 1);
+                    }
+                });
+            });
+            glasses.forEach(glass=>{
+                glassdown(glass);
+                balls.forEach(ball => {
+                if (ball.col === glass.col && ball.ga === glass.ro) {
+                    glass.element.remove();
+                    // ball.element.remove();
+                    // avacol=avacol.filter(item=>item!==lo.y)
+                    // avacol.push(ball.col)
+                    score+=1;
+                }
+            });
+            });
+            
+            setTimeout(loop,200);
+            document.getElementById('sc').innerHTML="Score: "+score;
+            if(score>hs)
+            {
+                localStorage.setItem('highballs',score);
+                document.getElementById('highballs').innerHTML=score;    
+            }
+        }
+        loop();
+        let arr=[11,12,13];
+        function create()
+        {
+
+            if(avacol.includes(lo.y))
+            {
+            let ballup = document.createElement('div');
+            ballup.classList.add('ballup');
+            document.getElementById('board').appendChild(ballup);
+            let col = lo.y;
+            let ga = 20;
+            balls.push({element: ballup, col: col, ga: ga});
+            arr.push(lo.y);
+            avacol=avacol.filter(item=>item!==lo.y)
+            }
+        }
+        let i=0;
+        function add()
+        {
+                let n = arr[0];
+                if (!avacol.includes(n)) {
+                    avacol.push(n);
+                }
+                
+                arr.splice(0,1);
+                setTimeout(add, 2000); 
+        }
+        add();
+        function up(ball)
+        {
+            if(ball.ga<=0)
+            {
+                ball.element.remove();
+            }
+            ball.element.style.gridColumnStart=ball.col;
+            ball.element.style.gridRowStart=ball.ga;
+            ball.ga-=1
+        }
+        function left()
+        {
+            lo.y-=b
+            let a=document.getElementById('ball')
+            a.style.gridColumnStart=lo.y;
+            if(lo.y<1)
+            {
+                b=0;
+            }
+            else{
+                b=1;
+            }
+        }
+        function right()
+        {
+            lo.y+=b
+            let a=document.getElementById('ball')
+            a.style.gridColumnStart=lo.y;
+            if(lo.y>=10)
+            {
+                b=0;
+            }
+            else{
+                b=1;
+            }
+        }
+        window.addEventListener('keydown',e=>{
+            if(sta==1)
+            {
+                if(e.key=="Enter" || e.key=="ArrowUp")
+                {
+                    create()
+                }
+                else if(e.key=="ArrowLeft")
+                {
+                    left();
+                }
+                else if(e.key=="ArrowRight")
+                {
+                    right();
+                }
+            }
+        });
+    </script>
+</html>
