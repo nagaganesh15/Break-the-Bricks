@@ -67,7 +67,7 @@
             }
             #stbu{
                 display: block; 
-                grid-row-start: 10; 
+                grid-row-start: 4; 
                 grid-column-start: 4;
                 /* position: absolute;
                 top:45%;
@@ -82,8 +82,10 @@
             #stbu:hover {
                 background-color: rgba(255, 255, 255, 1);
             }
-            #direction{
+            #direction,#direction1{
                 background-color: rgba(0, 0, 0, 0.7);
+                /* padding-left: 10px;
+                padding-right: 10px; */
                 padding: 20px;
                 border-radius: 10px;
                 text-align: center;
@@ -95,7 +97,11 @@
                 /* position: absolute; */
                 /* top: 50px; */
                 color: white;
-                grid-row-start: 9;
+                grid-row-start: 2;
+                grid-column-start: 4;
+            }
+            #direction1{
+                grid-row-start: 6;
                 grid-column-start: 4;
             }
             /* #left,#up,#right,#duup{
@@ -185,11 +191,16 @@
             <button id="stbu" onclick="start()">Start</button>
             <audio src="start.mp3" id="startsound"></audio>
             <div id="direction">
-                <h2>How to Play</h2>
+                <h2>How to Play in Mobile Phones?</h2>
+                <p>Tap the left side of the screen to move the ball left.<br>Swipe left to move the ball left.</p>
+                <p>Tap the right side of the screen to move the ball right.<br>Swipe right to move the ball right.</p>
+                <p>Tap the middle of the screen to blast the bricks.</p>
+            </div>
+            <div id="direction1">
+                <h2>How to Play in Laptops or Destops?</h2>
                 <p>Use the left and right arrow keys to move the Ball.</p>
                 <p>Use the Up arrow or Enter keys to blast the bricks.</p>
                 <p>Break the falling bricks to score points</p>
-                
             </div>
             <div id="ball"></div>
         </div>
@@ -226,6 +237,7 @@
                 document.getElementById('up').style.display='block';
                 // document.getElementById('duup').style.display='block';
                 document.getElementById('direction').style.display='none';
+                document.getElementById('direction1').style.display='none';
                 let a=document.getElementById('stbu');
                 let b=document.getElementById('ball');
                 b.style.display='block'
